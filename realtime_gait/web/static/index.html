@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>无人机步态识别控制台</title>
+  <link rel="stylesheet" href="/static/style.css?v=7" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div>
+        <h1>无人机步态识别控制台</h1>
+        <p class="subtitle">图传预览 · 一键注册 · 步态识别</p>
+      </div>
+      <div class="mode-badge" id="modeBadge">PREVIEW</div>
+    </header>
+
+    <main class="layout">
+      <section class="video-panel">
+        <div class="panel-head">
+          <div class="panel-title">
+            <span class="panel-icon">📡</span>
+            <div>
+              <h2>实时图传</h2>
+              <p class="panel-desc">检测 · 跟踪 · 步态识别</p>
+            </div>
+          </div>
+          <div class="live-chips" id="liveChips">
+            <span class="chip chip-off">未连接</span>
+          </div>
+        </div>
+
+        <div class="video-frame">
+          <div class="video-wrap">
+            <img id="videoFeed" alt="图传画面" src="" />
+            <div class="video-placeholder" id="videoPlaceholder">
+              <div class="placeholder-inner">
+                <span class="placeholder-icon">▶</span>
+                <p>点击右侧「连接图传」开始</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="kpi-strip" id="kpiStrip"></div>
+
+        <div class="dash-grid">
+          <div class="dash-panel">
+            <div class="dash-panel-head">
+              <span>模块耗时</span>
+              <span class="dash-unit">ms</span>
+            </div>
+            <div class="timing-bars" id="timingGrid"></div>
+          </div>
+          <div class="dash-panel dash-panel-wide">
+            <div class="dash-panel-head">
+              <span>识别结果</span>
+              <span class="dash-count" id="recogCount">0 人</span>
+            </div>
+            <div class="recognition-results" id="recognitionResults">
+              <p class="dash-empty">未连接图传</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="control-panel">
+        <div class="card">
+          <h2>图传连接</h2>
+          <label class="field">
+            <span>RTSP 地址</span>
+            <input id="streamUrl" type="text" placeholder="rtsp://127.0.0.1:8554/home" />
+          </label>
+          <div class="btn-row">
+            <button class="btn primary" id="btnConnect">连接图传</button>
+            <button class="btn" id="btnDisconnect">断开</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>工作模式</h2>
+          <p class="hint">
+            <strong>预览</strong>：只画绿框和 T1，不跑身份比对。<br />
+            <strong>识别</strong>：与下方档案库比对，显示姓名。
+          </p>
+          <div class="btn-row">
+            <button class="btn mode-btn" id="btnPreview">预览模式</button>
+            <button class="btn mode-btn" id="btnRecognize">识别模式</button>
+          </div>
+        </div>
+
+        <div class="card enroll-card">
+          <h2>一键注册</h2>
+          <p class="hint">须先<strong>连接图传</strong>（见上方，出现 LIVE）。填姓名后点「开始注册」，人正常行走约 1.5 秒，再点「完成注册」。</p>
+          <label class="field">
+            <span>姓名 / ID</span>
+            <input id="enrollName" type="text" placeholder="例如：张三" />
+          </label>
+          <label class="field" id="enrollTrackField">
+            <span>注册目标（可选）</span>
+            <select id="enrollTrackSelect">
+              <option value="">自动 — 轮廓最多的人</option>
+            </select>
+          </label>
+          <div class="progress-block" id="enrollProgress" hidden>
+            <div class="progress-label">
+              采集进度：<strong id="silProgress">0 / 15</strong>
+              · 时长 <strong id="spanProgress">0.0s</strong>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <p class="ready-tip" id="readyTip" hidden>轮廓已足够，可以完成注册</p>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn accent" id="btnEnrollStart">开始注册</button>
+            <button type="button" class="btn primary" id="btnEnrollFinish" disabled>完成注册</button>
+            <button type="button" class="btn ghost" id="btnEnrollCancel" disabled>取消</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>步态档案库</h2>
+          <p class="hint">选中人员后可删除；会同时移除内存档案、<code>registry.json</code> 与对应 <code>.pkl</code> 文件。</p>
+          <label class="field">
+            <span id="galleryListLabel">库内人员（0 人）</span>
+            <select id="galleryPeople" class="gallery-select" size="5">
+              <option value="">档案库为空 — 请先注册或重新加载</option>
+            </select>
+          </label>
+          <div class="btn-row">
+            <button class="btn" id="btnGalleryReload">重新加载档案</button>
+            <button class="btn danger" id="btnGalleryDelete" disabled>删除选中</button>
+          </div>
+        </div>
+
+        <div class="card status-card">
+          <h2>操作日志</h2>
+          <div class="status-log" id="statusLog">等待连接…</div>
+        </div>
+      </aside>
+    </main>
+  </div>
+  <script src="/static/app.js?v=7"></script>
+</body>
+</html>

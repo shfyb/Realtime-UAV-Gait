@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Runtime output (gallery, logs, screenshots)
+output/
+!output/.gitkeep
+!output/gallery/.gitkeep
+
+# Gallery embeddings & registry (user-specific)
+*.pkl
+
+# Model weights (download separately — see demo/checkpoints/README.md)
+demo/checkpoints/**/*.pt
+demo/checkpoints/**/*.pth
+demo/checkpoints/**/*.pdiparams
+demo/checkpoints/**/*.pdmodel
+demo/checkpoints/**/*.onnx
+
+# Keep deploy.yaml and directory structure
+!demo/checkpoints/**/deploy.yaml
+!demo/checkpoints/**/.gitkeep
+!demo/checkpoints/README.md
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs & temp
+*.log
+*.tmp
+
+# Large generated bundles
+*.zip

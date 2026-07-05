@@ -1,0 +1,10 @@
+# DroneGait high-view pedestrian detection (YOLO format, 1 class)
+# Build: python tools/dronegait2yolo.py --frames-per-video 8 --clean-output
+# Example: yolo train data=DroneGait.yaml
+
+path: /data/liaoqi/dronegait1/DroneGait-DET
+train: DroneGait-DET-train/images
+val: DroneGait-DET-val/images
+
+names:
+  0: pedestrian

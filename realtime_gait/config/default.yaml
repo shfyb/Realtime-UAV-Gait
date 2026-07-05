@@ -1,0 +1,45 @@
+# Real-time gait pipeline — timing is wall-clock based (FPS/jitter tolerant)
+
+paths:
+  drone_yolo: demo/checkpoints/Drone-YOLO/best.pt
+  seg_model: demo/checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax/deploy.yaml
+  gait_cfg: configs/gaitbase/gaitbase_da_dronegait1.yaml
+  gait_ckpt_hint: 60000
+
+device: cuda
+
+# Wall-clock scheduling (does NOT depend on stable ingest FPS)
+timing:
+  process_interval_ms: 33.3      # detect+track ~30 Hz
+  seg_interval_ms: 66.7          # segment ~15 Hz
+  min_sil_count: 15              # min silhouettes before first gait
+  min_sil_duration_sec: 1.5      # silhouettes must span at least this long
+  sil_buffer_duration_sec: 6.0   # keep last N seconds per track_id
+  recognition_interval_sec: 1.0  # min gap between gait runs on same track
+  gait_sample_frames: 30         # frames sampled into GaitBase
+
+tracker:
+  frame_rate: 30                 # nominal Hz (init only); runtime uses measured dt
+  max_time_lost_sec: 1.0         # drop lost track after this many real seconds
+  dt_ema_alpha: 0.2              # EMA smooth factor for inter-update interval
+  dt_min_sec: 0.005
+  dt_max_sec: 0.5
+  min_area: 100
+  max_aspect_ratio: 3.0
+  min_aspect_ratio: 0.3
+
+detector:
+  conf: 0.25
+  iou: 0.6
+  pedestrian_class_id: 0       # DroneGait single-class pedestrian
+
+segmentor:
+  crop_pad_ratio: 0.1
+  input_size: 192
+  mask_threshold: 80
+  use_gpu: true   # PP-HumanSeg 用 GPU（需 Paddle+cuDNN 正常；false 则走 CPU）
+
+recognizer:
+  distance_threshold: 100.0
+  sil_similarity_threshold: 0.75   # below → re-run GaitBase
+  dataset: GREW
