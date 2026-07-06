@@ -202,21 +202,8 @@ cd D:\tools\mediamtx
 
 ### 4.4 向 MediaMTX 推流
 
-任选一种方式，将画面推到 `live/home`：
+手机 / 无人机 App  `rtmp://<电脑IP>:1935/live/home`  在 App 自定义 RTMP 推流中填写 |
 
-| 方式 | 推流地址示例 | 说明 |
-|------|-------------|------|
-| 手机 / 无人机 App | `rtmp://<电脑IP>:1935/live/home` | 在 App 自定义 RTMP 推流中填写 |
-| OBS | 服务器 `rtmp://127.0.0.1:1935/live`，串流密钥 `home` | 适合本机摄像头调试 |
-| ffmpeg（摄像头） | 见下方命令 | 无 App 时的快速测试 |
-
-**ffmpeg 本机摄像头示例：**
-
-```powershell
-ffmpeg -f dshow -i video="你的摄像头名称" -c:v libx264 -preset ultrafast -tune zerolatency -f flv rtmp://127.0.0.1:1935/live/home
-```
-
-列出摄像头名称：`ffmpeg -list_devices true -f dshow -i dummy`
 
 ### 4.5 验证 RTSP 是否可用
 
@@ -399,8 +386,3 @@ realtime-gait/
 
 ---
 
-## License
-
-MIT — 见 [LICENSE](LICENSE)。
-
-基于 [OpenGait](https://github.com/ShiqiYu/OpenGait) 扩展，融合 DroneYOLO、ByteTrack、PP-HumanSeg 实现实时航拍步态识别。
