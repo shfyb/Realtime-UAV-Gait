@@ -30,8 +30,6 @@
 7. [命令行用法](#7-命令行用法)
 8. [配置说明](#8-配置说明)
 9. [常见问题](#9-常见问题)
-10. [更多文档](#10-更多文档)
-
 ---
 
 ## 1. 环境要求
@@ -380,36 +378,6 @@ recognizer:
 | Paddle GPU 失败 | 按 3.3 节安装对应 wheel；必要时复制 cuDNN DLL |
 | 检测框很少 | 室内摄像头与 Drone-YOLO 训练域不同，可降低 `detector.conf` |
 | 有效帧率 ~28 Hz | 正常；步态模块周期性运行，不影响跟踪与分割 |
-
----
-
-## 10. 更多文档
-
-| 文档 | 内容 |
-|------|------|
-| [`realtime_gait/README.md`](realtime_gait/README.md) | 模块架构与 API |
-| [`docs/WINDOWS_DEPLOY.md`](docs/WINDOWS_DEPLOY.md) | Windows 补充说明 |
-| [`docs/CHANGELOG.md`](docs/CHANGELOG.md) | 开发记录 |
-| [`docs/PUBLISHING.md`](docs/PUBLISHING.md) | Git 发布指南 |
-| [`demo/checkpoints/README.md`](demo/checkpoints/README.md) | 模型权重说明 |
-
----
-
-## 仓库结构
-
-```
-realtime-gait/
-├── realtime_gait/       # 流水线、Web UI、CLI
-├── opengait/            # GaitBase 推理框架
-├── configs/             # 步态模型 YAML
-├── demo/
-│   ├── libs/            # 检测 / 跟踪 / 分割 / 步态封装
-│   └── checkpoints/     # 模型权重（本地放置）
-├── output/              # 运行时 gallery、截图（gitignore）
-├── requirements.txt
-├── run_web.bat          # 快捷启动 Web
-└── docs/
-```
 
 ---
 
