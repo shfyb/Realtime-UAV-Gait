@@ -92,7 +92,7 @@ cd realtime-gait
 权重文件体积较大，**不包含在 Git 仓库中**。请将以下文件放入对应目录：
 
 ```
-demo/checkpoints/
+checkpoints/
 ├── Drone-YOLO/
 │   └── best.pt                              # 行人检测（Drone-YOLO）
 ├── gait_model/
@@ -104,7 +104,7 @@ demo/checkpoints/
         └── model.pdiparams                  # 需自行下载
 ```
 
-详细说明见 [`demo/checkpoints/README.md`](demo/checkpoints/README.md)。
+详细说明见 [`checkpoints/README.md`](checkpoints/README.md)。
 
 **快速校验：**
 
@@ -112,9 +112,9 @@ demo/checkpoints/
 python -c "
 from pathlib import Path
 for p in [
-    'demo/checkpoints/Drone-YOLO/best.pt',
-    'demo/checkpoints/gait_model/GaitBase_DronGait1-60000.pt',
-    'demo/checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax/model.pdiparams',
+    'checkpoints/Drone-YOLO/best.pt',
+    'checkpoints/gait_model/GaitBase_DronGait1-60000.pt',
+    'checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax/model.pdiparams',
 ]:
     print('OK   ' if Path(p).is_file() else '缺失 ', p)
 "
@@ -392,12 +392,13 @@ recognizer:
 
 ```
 realtime-gait/
-├── realtime_gait/       # 流水线、Web UI、CLI
+├── gait_runtime/        # 检测 / 跟踪 / 分割 / 步态识别运行时
+├── realtime_gait/       # 实时管线、Web UI、CLI 演示集成
 ├── opengait/            # GaitBase 推理框架
 ├── configs/             # 步态模型 YAML
-├── demo/
-│   ├── libs/            # 检测 / 跟踪 / 分割 / 步态封装
-│   └── checkpoints/     # 模型权重（本地放置）
+├── checkpoints/         # 模型权重（本地放置）
+├── demo/                # 演示入口与运行说明
+├── legacy/              # 历史离线脚本归档
 ├── output/              # 运行时 gallery、截图（gitignore）
 ├── requirements.txt
 ├── run_web.bat          # 快捷启动 Web
@@ -411,7 +412,9 @@ realtime-gait/
 本仓库按“源码发布 + 本地模型权重”的方式整理：
 
 - 模型权重、gallery、截图、日志和运行产物不进入 Git。
-- 第三方运行时源码集中在 `demo/libs/`，并在 `.gitattributes` 中标记为 vendored，避免影响 GitHub 语言统计。
+- 主程序运行时位于 `gait_runtime/`；`demo/` 只保留演示入口。
+- 历史离线脚本已归档到 `legacy/legacy_scripts/`。
+- 第三方运行时源码在 `.gitattributes` 中标记为 vendored，避免影响 GitHub 语言统计。
 - 公开发布前请检查 [`docs/PUBLISHING.md`](docs/PUBLISHING.md) 和 [`NOTICE.md`](NOTICE.md)。
 - 当前发布风险与后续精简路线见 [`docs/RELEASE_AUDIT.md`](docs/RELEASE_AUDIT.md)。
 
