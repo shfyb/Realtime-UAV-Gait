@@ -1,5 +1,9 @@
 # Realtime Gait · 实时无人机步态识别
 
+[![Python](https://img.shields.io/badge/Python-3.9%20%7C%203.10-blue)](#1-环境要求)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20first-lightgrey)](docs/WINDOWS_DEPLOY.md)
+
 面向 **俯视航拍 / RTSP 图传** 的端到端行人步态识别系统。  
 从视频流中完成：检测 → 跟踪 → 轮廓分割 → 步态特征提取 → 档案库 1:N 身份比对。
 
@@ -31,6 +35,7 @@
 8. [配置说明](#8-配置说明)
 9. [常见问题](#9-常见问题)
 10. [仓库结构](#10-仓库结构)
+11. [发布说明](#11-发布说明)
 
 ---
 
@@ -78,7 +83,7 @@
 ### 2.1 克隆仓库
 
 ```powershell
-git clone https://github.com/你的用户名/realtime-gait.git
+git clone https://github.com/YOUR_USERNAME/realtime-gait.git
 cd realtime-gait
 ```
 
@@ -398,6 +403,17 @@ realtime-gait/
 ├── run_web.bat          # 快捷启动 Web
 └── docs/
 ```
+
+---
+
+## 11. 发布说明
+
+本仓库按“源码发布 + 本地模型权重”的方式整理：
+
+- 模型权重、gallery、截图、日志和运行产物不进入 Git。
+- 第三方运行时源码集中在 `demo/libs/`，并在 `.gitattributes` 中标记为 vendored，避免影响 GitHub 语言统计。
+- 公开发布前请检查 [`docs/PUBLISHING.md`](docs/PUBLISHING.md) 和 [`NOTICE.md`](NOTICE.md)。
+- 当前发布风险与后续精简路线见 [`docs/RELEASE_AUDIT.md`](docs/RELEASE_AUDIT.md)。
 
 ---
 
