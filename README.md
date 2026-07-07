@@ -30,6 +30,7 @@
 7. [命令行用法](#7-命令行用法)
 8. [配置说明](#8-配置说明)
 9. [常见问题](#9-常见问题)
+10.[仓库结构](#10-仓库结构)
 ---
 
 ## 1. 环境要求
@@ -68,8 +69,6 @@
 ```
 
 > **调试说明**：无无人机时，可用 **手机 / 本机摄像头 + OBS / ffmpeg** 向 MediaMTX 推流做功能验证；但检测与步态模型针对 **航拍俯视域** 训练，室内 webcam 效果可能偏弱，不代表真机表现。
-
-> 所有命令均在 **仓库根目录**（含 `realtime_gait/`、`demo/`、`configs/` 的目录）执行。
 
 ---
 
@@ -378,6 +377,24 @@ recognizer:
 | Paddle GPU 失败 | 按 3.3 节安装对应 wheel；必要时复制 cuDNN DLL |
 | 检测框很少 | 室内摄像头与 Drone-YOLO 训练域不同，可降低 `detector.conf` |
 | 有效帧率 ~28 Hz | 正常；步态模块周期性运行，不影响跟踪与分割 |
+
+---
+
+## 10. 仓库结构
+
+```
+realtime-gait/
+├── realtime_gait/       # 流水线、Web UI、CLI
+├── opengait/            # GaitBase 推理框架
+├── configs/             # 步态模型 YAML
+├── demo/
+│   ├── libs/            # 检测 / 跟踪 / 分割 / 步态封装
+│   └── checkpoints/     # 模型权重（本地放置）
+├── output/              # 运行时 gallery、截图（gitignore）
+├── requirements.txt
+├── run_web.bat          # 快捷启动 Web
+└── docs/
+```
 
 ---
 
