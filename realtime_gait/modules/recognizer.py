@@ -40,7 +40,7 @@ class GalleryStore:
             self._feat[person_id].append(entry)
 
     def register_from_probe_dict(self, probe_feat: dict) -> None:
-        """Import features produced by demo/libs/recognise.extract_sil."""
+        """Import OpenGait-style features from an offline extraction script."""
         for pid, items in probe_feat.items():
             for item in items:
                 for typ, views in item.items():

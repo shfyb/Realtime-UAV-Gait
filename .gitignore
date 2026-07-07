@@ -7,6 +7,11 @@ __pycache__/
 dist/
 build/
 *.egg
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
 .venv/
 venv/
 env/
@@ -21,21 +26,29 @@ env/
 output/
 !output/.gitkeep
 !output/gallery/.gitkeep
+runs/
+wandb/
+logs/
+temp/
+tmp/
 
 # Gallery embeddings & registry (user-specific)
 *.pkl
+registry.json
 
-# Model weights (download separately — see demo/checkpoints/README.md)
-demo/checkpoints/**/*.pt
-demo/checkpoints/**/*.pth
-demo/checkpoints/**/*.pdiparams
-demo/checkpoints/**/*.pdmodel
-demo/checkpoints/**/*.onnx
+# Model weights (download separately — see checkpoints/README.md)
+checkpoints/**/*.pt
+checkpoints/**/*.pth
+checkpoints/**/*.pdiparams
+checkpoints/**/*.pdmodel
+checkpoints/**/*.onnx
+*.ckpt
+*.safetensors
 
 # Keep deploy.yaml and directory structure
-!demo/checkpoints/**/deploy.yaml
-!demo/checkpoints/**/.gitkeep
-!demo/checkpoints/README.md
+!checkpoints/**/deploy.yaml
+!checkpoints/**/.gitkeep
+!checkpoints/README.md
 
 # OS
 .DS_Store
@@ -46,5 +59,16 @@ desktop.ini
 *.log
 *.tmp
 
+# Local datasets and media captures
+data/
+datasets/
+*.mp4
+*.avi
+*.mov
+*.mkv
+
 # Large generated bundles
 *.zip
+*.tar
+*.tar.gz
+*.7z

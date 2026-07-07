@@ -64,10 +64,10 @@ class RecognizerConfig:
 
 @dataclass
 class PipelineConfig:
-    drone_yolo: Path = field(default_factory=lambda: resolve_path("demo/checkpoints/Drone-YOLO/best.pt"))
+    drone_yolo: Path = field(default_factory=lambda: resolve_path("checkpoints/Drone-YOLO/best.pt"))
     seg_model: Path = field(
         default_factory=lambda: resolve_path(
-            "demo/checkpoints/seg_model/"
+            "checkpoints/seg_model/"
             "human_pp_humansegv2_mobile_192x192_inference_model_with_softmax/deploy.yaml"
         )
     )

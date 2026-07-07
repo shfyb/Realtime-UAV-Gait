@@ -1,0 +1,26 @@
+# Keep vendored research/runtime code from dominating GitHub language stats.
+gait_runtime/mmseg/** linguist-vendored
+gait_runtime/paddle/paddleseg/** linguist-vendored
+gait_runtime/ultralytics/** linguist-vendored
+
+# Treat model weights and generated media as binary artifacts.
+*.pt binary
+*.pth binary
+*.pdmodel binary
+*.pdiparams binary
+*.onnx binary
+*.pkl binary
+*.mp4 binary
+*.avi binary
+*.mov binary
+*.mkv binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+
+# Exclude local-only material from source archives.
+output/ export-ignore
+checkpoints/**/*.pt export-ignore
+checkpoints/**/*.pth export-ignore
+checkpoints/**/*.pdmodel export-ignore
+checkpoints/**/*.pdiparams export-ignore

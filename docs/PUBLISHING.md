@@ -1,30 +1,52 @@
-# Publishing to GitHub
+# Publishing Checklist
 
-## 1. Copy model weights (local only, not pushed)
+Use this checklist before tagging or pushing a public release.
 
-From your backup `OpenGait/demo/checkpoints/` copy into this repo:
+## 1. Local model weights
 
-- `Drone-YOLO/best.pt`
-- `gait_model/GaitBase_DronGait1-60000.pt`
-- `seg_model/.../model.pdiparams` (and `model.pdmodel` if needed)
+Model weights are local runtime artifacts. They are intentionally ignored by
+Git and should be distributed only through an approved artifact channel.
 
-These paths are in `.gitignore` and will **not** be committed.
+Expected local paths:
 
-Optional: copy gallery pickles to `output/gallery/` for local testing.
-
-## 2. Initialize and first commit
-
-```powershell
-cd D:\py\py\realtime-gait
-git init
-git add .
-git status   # verify no .pt / .pkl / output/registry.json
-git commit -m "Initial release: realtime drone gait recognition pipeline"
+```text
+checkpoints/
+├── Drone-YOLO/best.pt
+├── gait_model/GaitBase_DronGait1-60000.pt
+└── seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax/
+    ├── deploy.yaml
+    ├── model.pdmodel
+    └── model.pdiparams
 ```
 
-## 3. Create GitHub repo and push
+## 2. Verify repository contents
 
-On GitHub: **New repository** → name e.g. `realtime-gait` → **do not** add README (already have one).
+```powershell
+git status --short
+git ls-files checkpoints
+git ls-files | findstr /R "\.pt$ \.pth$ \.pdmodel$ \.pdiparams$ \.pkl$"
+```
+
+Expected result:
+
+- `git status --short` only shows intentional release edits.
+- `git ls-files checkpoints` shows `.gitkeep`, `README.md`, `deploy.yaml`,
+  and lightweight metadata only.
+- The large-file scan prints nothing for model weights or gallery pickles.
+
+## 3. Run a lightweight validation
+
+```powershell
+python -m compileall realtime_gait opengait
+```
+
+GPU inference is not required for this check; it only validates that the
+publishable Python modules parse correctly.
+
+## 4. GitHub setup
+
+On GitHub, create an empty repository named `realtime-gait`. Do not add a
+README, license, or `.gitignore` there because this repository already has them.
 
 ```powershell
 git branch -M main
@@ -32,21 +54,18 @@ git remote add origin https://github.com/YOUR_USERNAME/realtime-gait.git
 git push -u origin main
 ```
 
-## 4. Before making public — checklist
+## 5. Public release checklist
 
-- [ ] No personal names in `output/` (gallery is gitignored)
-- [ ] No private IP addresses in committed code (defaults use `127.0.0.1`)
-- [ ] Model weights not in commit (`git log --stat` / check repo size)
-- [ ] LICENSE and README reviewed
-- [ ] Update GitHub repo description and topics: `gait-recognition`, `drone`, `opencv`, `pytorch`
+- [ ] No private gallery files or personal data under `output/`.
+- [ ] No private IP addresses, tokens, or machine-specific paths in committed code.
+- [ ] No model weights in Git history.
+- [ ] `LICENSE`, `NOTICE.md`, and third-party license obligations reviewed.
+- [ ] README clone URL uses the final GitHub owner.
+- [ ] `gait_runtime/` contains the runtime compatibility code; `demo/` contains
+  only runnable demonstrations.
+- [ ] Old experiments belong under `legacy/legacy_scripts/`.
+- [ ] Repository topics set: `gait-recognition`, `drone`, `opencv`, `pytorch`,
+  `rtsp`, `computer-vision`.
 
-## 5. Large files (optional later)
-
-If you ever need to host weights on GitHub, use **Git LFS** or release assets — do not commit multi-hundred-MB `.pt` files to normal Git history.
-
-## Repo locations
-
-| Path | Role |
-|------|------|
-| `D:\py\py\realtime-gait` | **Publishable** new repo (this folder) |
-| `D:\py\py\realtime_gait_windows_needed_bundle\OpenGait` | **Backup** — keep unchanged |
+See `docs/RELEASE_AUDIT.md` for the cleanup risks that remain after this
+release pass.

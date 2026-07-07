@@ -1,8 +1,8 @@
 # Real-time gait pipeline — timing is wall-clock based (FPS/jitter tolerant)
 
 paths:
-  drone_yolo: demo/checkpoints/Drone-YOLO/best.pt
-  seg_model: demo/checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax/deploy.yaml
+  drone_yolo: checkpoints/Drone-YOLO/best.pt
+  seg_model: checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax/deploy.yaml
   gait_cfg: configs/gaitbase/gaitbase_da_dronegait1.yaml
   gait_ckpt_hint: 60000
 

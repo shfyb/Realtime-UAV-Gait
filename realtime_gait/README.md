@@ -1,6 +1,6 @@
 ﻿# realtime_gait
 
-实时无人机步态识别流水线（面向 **numpy BGR** 图传帧，约 **120fps** 输入）。
+实时无人机步态识别流水线（面向 **numpy BGR** 图传帧，默认按约 **30 Hz** 进入 GPU 流水线）。
 
 ## 架构
 
@@ -9,11 +9,11 @@
         │
         ▼
 ┌───────────────────┐
-│  FrameScheduler   │  process_stride=4 → 约 30Hz 进入 GPU 流水线
+│  TimeScheduler    │  按 wall-clock 控制 → 约 30Hz 进入 GPU 流水线
 └─────────┬─────────┘
           ▼
 ┌───────────────────┐
-│   DroneYOLO       │  demo/checkpoints/Drone-YOLO/best.pt
+│   DroneYOLO       │  checkpoints/Drone-YOLO/best.pt
 └─────────┬─────────┘
           ▼
 ┌───────────────────┐
@@ -48,9 +48,9 @@ realtime_gait/
 
 与主工程相同，需已安装：
 
-- `demo/checkpoints/Drone-YOLO/best.pt`
-- `demo/checkpoints/seg_model/.../deploy.yaml`
-- `demo/checkpoints/gait_model/GaitBase_DronGait1-60000.pt`
+- `checkpoints/Drone-YOLO/best.pt`
+- `checkpoints/seg_model/.../deploy.yaml`
+- `checkpoints/gait_model/GaitBase_DronGait1-60000.pt`
 - `ultralytics`, `paddlepaddle-gpu`, PyTorch
 
 ## 快速使用
@@ -58,7 +58,7 @@ realtime_gait/
 在 **仓库根目录**（包含 `realtime_gait/`、`demo/`、`configs/` 的目录）执行：
 
 ```bash
-cd /path/to/All-in-One-Gait/OpenGait
+cd /path/to/realtime-gait
 
 # 用本地视频模拟图传
 python -m realtime_gait.main --video /data/.../test.mp4 --display
@@ -145,9 +145,6 @@ pipeline.load_gallery_from_features(gallery)
 
 ## 文档
 
-- 详细更新历史见 **[CHANGELOG.md](./CHANGELOG.md)**（后续改动请追加到该文件）
-
-- 旧流程：`main.py` 三遍读 mp4 + 落盘 PNG  
-- 新流程：`realtime_gait` 单帧 API、模型只加载一次、轮廓在内存按 `track_id` 累积  
-
-旧代码未删除，可并行对比调试。
+- 顶层使用手册见 [`../README.md`](../README.md)。
+- 发布检查见 [`../docs/PUBLISHING.md`](../docs/PUBLISHING.md)。
+- 当前发布审计见 [`../docs/RELEASE_AUDIT.md`](../docs/RELEASE_AUDIT.md)。

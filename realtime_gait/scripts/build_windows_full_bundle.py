@@ -17,8 +17,8 @@ IGNORE_SUFFIX = {".pyc", ".pyo", ".tmp", ".swp", ".log"}
 
 
 def _repo_root_from_script(script_file: Path) -> Path:
-    # .../All-in-One-Gait/OpenGait/realtime_gait/scripts/build_windows_full_bundle.py
-    return script_file.resolve().parents[3]
+    # .../realtime-gait/realtime_gait/scripts/build_windows_full_bundle.py
+    return script_file.resolve().parents[2]
 
 
 def _iter_files(base: Path):
@@ -53,7 +53,7 @@ def main() -> None:
     repo_root = _repo_root_from_script(script_file)
 
     parser = argparse.ArgumentParser(description="Build minimal Windows bundle for realtime_gait")
-    parser.add_argument("--repo-root", type=Path, default=repo_root, help="All-in-One-Gait root path")
+    parser.add_argument("--repo-root", type=Path, default=repo_root, help="realtime-gait repository root")
     parser.add_argument(
         "--output",
         type=Path,
@@ -64,7 +64,7 @@ def main() -> None:
         "--seg-model-dir",
         type=Path,
         default=None,
-        help="Optional external seg model dir, will be packed to OpenGait/demo/checkpoints/seg_model/...",
+        help="Optional external seg model dir, will be packed to OpenGait/checkpoints/seg_model/...",
     )
     parser.add_argument("--strict", action="store_true", help="Fail if any required item is missing")
     args = parser.parse_args()
@@ -75,26 +75,26 @@ def main() -> None:
 
     # Required runtime code for realtime_gait
     required_items = [
-        ("OpenGait/realtime_gait", "OpenGait/realtime_gait"),
-        ("OpenGait/opengait", "OpenGait/opengait"),
-        ("OpenGait/configs", "OpenGait/configs"),
-        ("OpenGait/demo/libs", "OpenGait/demo/libs"),
+        ("realtime_gait", "OpenGait/realtime_gait"),
+        ("opengait", "OpenGait/opengait"),
+        ("configs", "OpenGait/configs"),
+        ("gait_runtime", "OpenGait/gait_runtime"),
         ("requirements.txt", "requirements.txt"),
     ]
 
     # Required model/checkpoint files for current realtime_gait pipeline
     model_items = [
-        ("OpenGait/demo/checkpoints/Drone-YOLO/best.pt", "OpenGait/demo/checkpoints/Drone-YOLO/best.pt"),
-        ("OpenGait/demo/checkpoints/gait_model/GaitBase_DronGait1-60000.pt", "OpenGait/demo/checkpoints/gait_model/GaitBase_DronGait1-60000.pt"),
+        ("checkpoints/Drone-YOLO/best.pt", "OpenGait/checkpoints/Drone-YOLO/best.pt"),
+        ("checkpoints/gait_model/GaitBase_DronGait1-60000.pt", "OpenGait/checkpoints/gait_model/GaitBase_DronGait1-60000.pt"),
         (
-            "OpenGait/demo/checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax",
-            "OpenGait/demo/checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax",
+            "checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax",
+            "OpenGait/checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax",
         ),
     ]
     if args.seg_model_dir is not None:
         model_items[-1] = (
             str(args.seg_model_dir.resolve()),
-            "OpenGait/demo/checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax",
+            "OpenGait/checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax",
         )
 
     missing: list[str] = []

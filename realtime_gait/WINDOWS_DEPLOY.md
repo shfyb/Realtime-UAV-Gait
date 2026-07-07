@@ -15,7 +15,7 @@
 
 `D:\All-in-One-Gait`
 
-> `realtime_gait` 依赖 `OpenGait/demo/libs`、`OpenGait/configs` 以及模型权重目录，不能只单独复制 `realtime_gait` 子目录。
+> `realtime_gait` 依赖 `gait_runtime`、`configs` 以及模型权重目录，不能只单独复制 `realtime_gait` 子目录。
 
 ## 3. 建立虚拟环境
 
@@ -54,9 +54,9 @@ pip install paddlepaddle-gpu
 
 确保以下文件存在：
 
-- `OpenGait/demo/checkpoints/Drone-YOLO/best.pt`
-- `OpenGait/demo/checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax/deploy.yaml`
-- `OpenGait/demo/checkpoints/gait_model/GaitBase_DronGait1-60000.pt`
+- `checkpoints/Drone-YOLO/best.pt`
+- `checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax/deploy.yaml`
+- `checkpoints/gait_model/GaitBase_DronGait1-60000.pt`
 - `OpenGait/configs/gaitbase/gaitbase_da_dronegait1.yaml`
 
 默认读取配置为：
