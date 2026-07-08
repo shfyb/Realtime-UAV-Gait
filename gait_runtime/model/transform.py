@@ -5,8 +5,9 @@ import cv2
 import math
 import sys
 import os
-root =  os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname( os.path.abspath(__file__) )))) + "/opengait/"
-sys.path.append(root)
+root = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "opengait")
+if root not in sys.path:
+    sys.path.append(root)
 from data import transform as base_transform
 from utils import is_list, is_dict, get_valid_args
 

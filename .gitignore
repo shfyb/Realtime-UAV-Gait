@@ -4,17 +4,17 @@ __pycache__/
 *.pyo
 *.egg-info/
 .eggs/
-dist/
-build/
+/dist/
+/build/
 *.egg
-.pytest_cache/
-.ruff_cache/
-.mypy_cache/
+/.pytest_cache/
+/.ruff_cache/
+/.mypy_cache/
 .coverage
-htmlcov/
-.venv/
-venv/
-env/
+/htmlcov/
+/.venv/
+/venv/
+/env/
 
 # IDE
 .idea/
@@ -23,14 +23,16 @@ env/
 *.swo
 
 # Runtime output (gallery, logs, screenshots)
-output/
-!output/.gitkeep
-!output/gallery/.gitkeep
-runs/
-wandb/
-logs/
-temp/
-tmp/
+/output/*
+!/output/.gitkeep
+!/output/gallery/
+/output/gallery/*
+!/output/gallery/.gitkeep
+/runs/
+/wandb/
+/logs/
+/temp/
+/tmp/
 
 # Gallery embeddings & registry (user-specific)
 *.pkl
@@ -50,8 +52,8 @@ desktop.ini
 *.tmp
 
 # Local datasets and media captures
-data/
-datasets/
+/data/
+/datasets/
 *.mp4
 *.avi
 *.mov
