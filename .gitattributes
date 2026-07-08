@@ -3,11 +3,13 @@ gait_runtime/mmseg/** linguist-vendored
 gait_runtime/paddle/paddleseg/** linguist-vendored
 gait_runtime/ultralytics/** linguist-vendored
 
-# Treat model weights and generated media as binary artifacts.
-*.pt binary
-*.pth binary
-*.pdmodel binary
-*.pdiparams binary
+# Required runtime checkpoints (Git LFS — clone with `git lfs pull`).
+checkpoints/**/*.pt filter=lfs diff=lfs merge=lfs -text
+checkpoints/**/*.pth filter=lfs diff=lfs merge=lfs -text
+checkpoints/**/*.pdmodel filter=lfs diff=lfs merge=lfs -text
+checkpoints/**/*.pdiparams filter=lfs diff=lfs merge=lfs -text
+
+# Treat other generated media as binary artifacts.
 *.onnx binary
 *.pkl binary
 *.mp4 binary
@@ -20,7 +22,3 @@ gait_runtime/ultralytics/** linguist-vendored
 
 # Exclude local-only material from source archives.
 output/ export-ignore
-checkpoints/**/*.pt export-ignore
-checkpoints/**/*.pth export-ignore
-checkpoints/**/*.pdmodel export-ignore
-checkpoints/**/*.pdiparams export-ignore

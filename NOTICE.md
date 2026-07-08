@@ -18,6 +18,5 @@ Older offline demo scripts are archived under `legacy/legacy_scripts/`.
 They are retained for reference and should not be treated as supported release
 entry points.
 
-Model weights are intentionally not part of the source release. Store them as
-private artifacts, GitHub Release assets, or Git LFS objects according to their
-own licenses and redistribution rules.
+Model weights under `checkpoints/` are stored as Git LFS objects. Verify their
+licenses and redistribution permissions before making the repository public.

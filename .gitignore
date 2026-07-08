@@ -36,19 +36,9 @@ tmp/
 *.pkl
 registry.json
 
-# Model weights (download separately — see checkpoints/README.md)
-checkpoints/**/*.pt
-checkpoints/**/*.pth
-checkpoints/**/*.pdiparams
-checkpoints/**/*.pdmodel
-checkpoints/**/*.onnx
+# Model weights are tracked via Git LFS when placed under checkpoints/.
 *.ckpt
 *.safetensors
-
-# Keep deploy.yaml and directory structure
-!checkpoints/**/deploy.yaml
-!checkpoints/**/.gitkeep
-!checkpoints/README.md
 
 # OS
 .DS_Store

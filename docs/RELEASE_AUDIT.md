@@ -5,12 +5,11 @@ GitHub release.
 
 ## Current Status
 
-Ready for a source release with local model weights kept outside Git:
+Ready for a source release with required model weights tracked through Git LFS:
 
 - Runtime output is ignored through `output/`.
-- Model checkpoints are ignored through `checkpoints/**/*.pt`,
-  `*.pdmodel`, `*.pdiparams`, and related patterns.
-- The tracked checkpoint directory only keeps structure and lightweight metadata.
+- Model checkpoints under `checkpoints/` are tracked through Git LFS.
+- Runtime-only user data such as gallery files remains ignored.
 - Release documentation exists in `README.md`, `docs/PUBLISHING.md`, and
   `docs/WINDOWS_DEPLOY.md`.
 
@@ -24,10 +23,10 @@ Ready for a source release with local model weights kept outside Git:
    release should replace these folders with package dependencies or documented
    submodules.
 
-2. Public weight redistribution is unresolved.
-   Keep model files out of Git unless their licenses permit redistribution.
-   Prefer GitHub Release assets, an internal artifact store, or Git LFS with a
-   clear model card and license statement.
+2. Public weight redistribution must be license-checked.
+   The checkpoint files are now intended to ship through Git LFS. Before making
+   the repository public, verify the redistribution terms for every model file
+   and keep a clear model/license note.
 
 3. Documentation is Windows-first.
    That matches the deployment target, but a public release should explicitly
@@ -49,6 +48,6 @@ Ready for a source release with local model weights kept outside Git:
 ```powershell
 git status --short
 git ls-files checkpoints
-git ls-files | findstr /R "\.pt$ \.pth$ \.pdmodel$ \.pdiparams$ \.pkl$"
+git lfs ls-files
 python -m compileall realtime_gait opengait
 ```

@@ -89,12 +89,20 @@ cd realtime-gait
 
 ### 2.2 放置模型权重
 
-权重文件体积较大，**不包含在 Git 仓库中**。请将以下文件放入对应目录：
+权重文件通过 **Git LFS** 随仓库管理。首次克隆后请确认已安装 Git LFS：
+
+```powershell
+git lfs install
+git lfs pull
+```
+
+期望目录：
 
 ```
 checkpoints/
 ├── Drone-YOLO/
-│   └── best.pt                              # 行人检测（Drone-YOLO）
+│   ├── best.pt                              # 行人检测（Drone-YOLO，默认）
+│   └── best1.pt                             # 备用检测权重
 ├── gait_model/
 │   └── GaitBase_DronGait1-60000.pt          # 步态识别（GaitBase）
 └── seg_model/
